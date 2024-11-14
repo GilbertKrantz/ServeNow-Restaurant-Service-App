@@ -1,3 +1,2 @@
 # SmartDine-Restaurant-Service-App
-
-test-vina
+# This is Dev Branch
