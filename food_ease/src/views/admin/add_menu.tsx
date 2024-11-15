@@ -77,7 +77,7 @@ function AddMenu() {
                             <option value="Pasta">Pasta</option>
                             <option value="Drinks">Drinks</option>
                             <option value="Desserts">Desserts</option>
-                            <option value="sides">Sides</option>
+                            <option value="Sides">Sides</option>
                         </select>
                     </li>
                     <li>
