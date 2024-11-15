@@ -16,16 +16,13 @@ function AddMenu() {
     const [imageKey, setImageKey] = React.useState("");
 
     async function handleAdd(menu_name: string, category: string, price: number, description: string, imageKey: string) {
-        const newMenu = {
+
+        addDoc(menuCollection, {
             name: menu_name,
             category: category,
             price: price,
             description: description,
             imageKey: imageKey
-        }
-
-        addDoc(menuCollection, {
-            newMenu
         })
             .then(() => {
                 console.log("Document successfully written!");
