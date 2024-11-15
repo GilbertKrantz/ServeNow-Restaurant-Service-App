@@ -14,18 +14,24 @@ function AddMenu() {
     const menuCollection = collection(db, "menu");
     const [imageKey, setImageKey] = React.useState("");
 
-    async function handleAdd(menu_name: string, category: string, price: number, description: string, image: string) {
+    async function handleAdd(menu_name: string, category: string, price: number, description: string, imageKey: string) {
         const newMenu = {
             name: menu_name,
             category: category,
             price: price,
             description: description,
-            image: image
+            imageKey: imageKey
         }
 
         addDoc(menuCollection, {
             newMenu
         })
+            .then(() => {
+                console.log("Document successfully written!");
+            })
+            .catch((error) => {
+                console.error("Error writing document: ", error);
+            });
     }
 
     async function handleSubmit(event: React.FormEvent) {
@@ -42,9 +48,18 @@ function AddMenu() {
         const category = target.category.value;
         const price = target.price.value;
         const description = target.description.value;
-        const image = target.image.value;
+        const imageKey = target.image.value;
 
-        handleAdd(menu_name, category, price, description, image);
+        // Add menu to database
+        handleAdd(menu_name, category, price, description, imageKey);
+
+        // Clear form
+        target.menu_name.value = "";
+        target.category.value = "";
+        target.price.value = 0;
+        target.description.value = "";
+        target.image.value = "";
+        setImageKey("");
     }
 
     
@@ -59,7 +74,13 @@ function AddMenu() {
                     </li>
                     <li>
                         <label htmlFor="category">Category</label>
-                        <input type="text" id="category" name="category" required />
+                        <select name="category" id="category">
+                            <option value="Pizza">Pizza</option>
+                            <option value="Pasta">Pasta</option>
+                            <option value="Drinks">Drinks</option>
+                            <option value="Desserts">Desserts</option>
+                            <option value="sides">Sides</option>
+                        </select>
                     </li>
                     <li>
                         <label htmlFor="price">Price</label>
@@ -83,6 +104,7 @@ function AddMenu() {
                             console.error(error, error.cause);alert("Upload failed");
                         }}/>
                         <input type="hidden" id="image" name="image" value={imageKey} />
+                        <img src={"https://utfs.io/f/" + imageKey} alt="" />
                     </li>
                 </ul>
                 <button type="submit">Add Menu</button>
