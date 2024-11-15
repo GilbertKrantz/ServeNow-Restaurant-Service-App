@@ -39,8 +39,7 @@ function Menu() {
 
     useEffect(() => {
         getMenu();
-        console.log(allMenu);
-    }, [allMenu]);
+    }, []);
 
     // SEARCH FILTER
     useEffect(() => {
