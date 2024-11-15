@@ -41,28 +41,25 @@ function Menu() {
         getMenu();
     }, []);
 
-    // SEARCH FILTER
+    // Complete FILTER
     useEffect(() => {
-        if (filter === '') {
-            setFilteredMenu(allMenu);
-            console.log(filteredMenu)
-        } else {
-            const filtered = allMenu.filter(menu => menu.name.toLowerCase().includes(filter.toLowerCase()));
-            setFilteredMenu(filtered);
-            console.log(filtered);
-        }
-    }, [filter, allMenu, filteredMenu]);
+        const applyFilters = () => {
+            // Filter by name (text search)
+            let filtered = allMenu.filter(menu => 
+                menu.name.toLowerCase().includes(filter.toLowerCase())
+            );
 
-    // CATEGORY FILTER (UNTested)
-    useEffect(() => {
-        if (category === 'all') {
-            setFilteredMenu(allMenu);
-        } else {
-            const filtered = allMenu.filter(menu => menu.category === category);
-            setFilteredMenu(filtered);
-        }
-    }, [category, allMenu]);
+            // Filter by category (if not 'all')
+            if (category !== 'All') {
+                filtered = filtered.filter(menu => menu.category === category);
+            }
 
+            setFilteredMenu(filtered);
+        };
+
+        // Apply filters whenever `filter` or `category` changes
+        applyFilters();
+    }, [filter, category, allMenu]);
 
     return (
         <Container>
