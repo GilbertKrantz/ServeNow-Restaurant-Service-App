@@ -8,6 +8,7 @@ import { collection, addDoc } from "firebase/firestore";
 
 // UploadButton 
 import { UploadButton } from "../../utils/uploadthing";
+import Container from "../../layout/container";
 
 function AddMenu() {
     // Create menu collection if it doesn't exist
@@ -49,7 +50,7 @@ function AddMenu() {
 
     
     return (
-        <>
+        <Container>
             <h1>Add Menu</h1>
             <form onSubmit={handleSubmit}>
                 <ul>
@@ -87,7 +88,7 @@ function AddMenu() {
                 </ul>
                 <button type="submit">Add Menu</button>
             </form>
-        </>
+        </Container>
     );
 }
 
