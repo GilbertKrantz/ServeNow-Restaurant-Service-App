@@ -52,7 +52,7 @@ function Menu() {
             setFilteredMenu(filtered);
             console.log(filtered);
         }
-    }, [filter, allMenu]);
+    }, [filter, allMenu, filteredMenu]);
 
     // CATEGORY FILTER (UNTested)
     useEffect(() => {
