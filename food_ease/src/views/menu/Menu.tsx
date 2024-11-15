@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion";
 import MenuCard from "./components/menu_card/MenuCard";
 import { IMenu } from "../../interfaces/Menu.interfaces";
+import _ from "lodash";
+import { ICart } from "./components/cart/Cart.interfaces";
 
 function Menu() {
     const [filteredMenu, setFilteredMenu] = useState<IMenu[]>([]);
@@ -23,11 +25,8 @@ function Menu() {
     const [categoryList, setCategoryList] = useState<string[]>(['All', 'Pizza', 'Pasta', 'Drinks', 'Desserts', 'sides']);
     const [category, setCategory] = useState<string>('All');
     const [index, setIndex] = useState(0);
-    
-    const onHandleChangeSearch = (e: any) => {
-        e.preventDefault();
-        setFilter(e.target.value);
-    };
+    const [cartItems, setCartItems] = useState<ICart[]>([]);
+
     const navigate = useNavigate();
 
     // BUAT AMBIL MENU
@@ -60,6 +59,13 @@ function Menu() {
         // Apply filters whenever `filter` or `category` changes
         applyFilters();
     }, [filter, category, allMenu]);
+
+    const onHandleChangeSearch = (e: any) => {
+        e.preventDefault();
+        setFilter(e.target.value);
+    };
+
+
 
     return (
         <Container>
