@@ -43,15 +43,16 @@ function Menu() {
     // Complete FILTER
     useEffect(() => {
         const applyFilters = () => {
-            // Filter by name (text search)
-            let filtered = allMenu.filter(menu => 
-                menu.name.toLowerCase().includes(filter.toLowerCase())
-            );
+            let filtered = allMenu;
 
             // Filter by category (if not 'all')
             if (category !== 'All') {
-                filtered = filtered.filter(menu => menu.category === category);
+                filtered = allMenu.filter(menu => menu.category === category);
             }
+            // Filter by name (text search)
+            filtered = filtered.filter(menu => 
+                menu.name.toLowerCase().includes(filter.toLowerCase())
+            );
 
             setFilteredMenu(filtered);
         };
