@@ -11,6 +11,8 @@ export interface IShowCart {
 }
 
 export interface CartProps {
-    cartItems: IShowCart[]; // Array of cart items
-    onHandleCloseCart: () => void; // Function to close the cart
+    cartItems: IShowCart[]; 
+    onHandleCloseCart: () => void;
+    onHandleAddCount: (id: string) => void;
+    onHandleMinusCount: (id: string) => void;
 }

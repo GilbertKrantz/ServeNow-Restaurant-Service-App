@@ -94,6 +94,55 @@ function Menu() {
         setIsShowCart(false);
     }
 
+    const onHandleAddCount = (id: string) => {
+        const cartData = localStorage.getItem('cart');
+        if (cartData) {
+            const currCartData: ICart[] = JSON.parse(cartData);
+            let tempCartData = _.cloneDeep(currCartData);
+            const itemIndexInLocalStorage = tempCartData.findIndex((item: ICart) => item.id === id);
+            if (itemIndexInLocalStorage !== -1) {
+                tempCartData[itemIndexInLocalStorage].count += 1;  
+                setCart(tempCartData)
+                localStorage.setItem('cart', JSON.stringify(tempCartData));
+            }
+        }
+
+        let tempShowCartData = _.cloneDeep(cartItems);
+        const itemIndexInSate = tempShowCartData.findIndex((item: IShowCart) => item.menu.id === id);
+        if (itemIndexInSate !== -1) {
+            tempShowCartData[itemIndexInSate].count += 1;  
+            setCartItems(tempShowCartData)
+        }
+        
+    } 
+
+    const onHandleMinusCount = (id: string) => {
+        const cartData = localStorage.getItem('cart');
+        if (cartData) {
+            const currCartData: ICart[] = JSON.parse(cartData);
+            let tempCartData = _.cloneDeep(currCartData);
+            const itemIndexInLocalStorage = tempCartData.findIndex((item: ICart) => item.id === id);
+            if (itemIndexInLocalStorage !== -1) {
+                tempCartData[itemIndexInLocalStorage].count -= 1; 
+                if (tempCartData[itemIndexInLocalStorage].count === 0){
+                    tempCartData = tempCartData.filter((item: ICart) => item.id !== id);
+                } 
+                setCart(tempCartData)
+                localStorage.setItem('cart', JSON.stringify(tempCartData));
+            }
+        }
+
+        let tempShowCartData = _.cloneDeep(cartItems);
+        const itemIndexInSate = tempShowCartData.findIndex((item: IShowCart) => item.menu.id === id);
+        if (itemIndexInSate !== -1) {
+            tempShowCartData[itemIndexInSate].count -= 1;
+            if (tempShowCartData[itemIndexInSate].count === 0){
+                tempShowCartData = tempShowCartData.filter((item: ICart) => item.id !== id);
+            }
+            setCartItems(tempShowCartData)
+        }
+        
+    } 
 
 
     return (
@@ -156,17 +205,31 @@ function Menu() {
                 </div>
                 
             </div>
-
-            {isShowCart &&
-                <motion.div
-                    className="fixed top-0 right-0 h-full bg-[#FFD6D6] shadow-lg w-[80%] p-4 z-50 rounded-l-3xl"
-                    initial={{ x: "100%" }}
-                    animate={{ x: isShowCart ? "0%" : "100%" }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            
+            {/* SHOW CART WHEN isShowCart = TRUE */}
+            {isShowCart && (
+                <div
+                    className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-40"
+                    onClick={onHandleCloseCart} // Close the cart when clicking the overlay
                 >
-                    <Cart cartItems={cartItems} onHandleCloseCart={onHandleCloseCart}/>
-                </motion.div>
-            }
+                    <motion.div
+                        className="fixed top-0 right-0 h-full bg-[#FFB0B0] shadow-lg w-[80%] z-50 rounded-l-3xl overflow-y-scroll"
+                        initial={{ x: "100%" }}
+                        animate={{ x: "0%" }}
+                        exit={{ x: "100%" }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        onClick={(e: any) => e.stopPropagation()} // Prevent closing when clicking inside the cart
+                    >
+                        <Cart 
+                            cartItems={cartItems} 
+                            onHandleCloseCart={onHandleCloseCart} 
+                            onHandleAddCount={onHandleAddCount} 
+                            onHandleMinusCount={onHandleMinusCount} 
+
+                        />
+                    </motion.div>
+                </div>
+            )}
         </Container>
     );
 }
