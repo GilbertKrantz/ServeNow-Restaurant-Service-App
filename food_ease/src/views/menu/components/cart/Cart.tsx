@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CartProps, IShowCart } from './Cart.interfaces';
 
 const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart }) => {
+
     return (
         <div className="flex justify-between items-center">
             {
                 cartItems.map((item: IShowCart) => (
-                <div>{item.menu.id}</div>
+                <div>
+                    ID : {item.menu.id}
+                    <div>Name: {item.menu.name}</div>
+                    <div>Price: {item.menu.price}</div>
+                    <div>Category: {item.menu.category}</div>
+                    <div>Description: {item.menu.description}</div>
+                    <div>Count: {item.count}</div>
+                </div>
                 ))
             }
         </div>

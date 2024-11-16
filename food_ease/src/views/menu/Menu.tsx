@@ -17,6 +17,7 @@ import { IMenu } from "../../interfaces/Menu.interfaces";
 import _ from "lodash";
 import { ICart, IShowCart } from "./components/cart/Cart.interfaces";
 import Cart from "./components/cart/Cart";
+import { set } from "lodash";
 
 function Menu() {
     const [filteredMenu, setFilteredMenu] = useState<IMenu[]>([]);
@@ -47,6 +48,21 @@ function Menu() {
             setCart(currCartData)
         }
     }, []);
+
+    // Cart to showCart
+    useEffect(() => {
+        const showCart = () => {
+            let showCart: IShowCart[] = [];
+            cart.forEach((item) => {
+                const menu = allMenu.find((m) => m.id === item.id);
+                if (menu) {
+                    showCart.push({menu, count: item.count});
+                }
+            });
+            setCartItems(showCart);
+        };
+        showCart();
+    }, [cart, allMenu]);
 
     // Complete FILTER
     useEffect(() => {
