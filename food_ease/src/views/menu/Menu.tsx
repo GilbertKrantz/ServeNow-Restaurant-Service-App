@@ -15,7 +15,8 @@ import { motion } from "framer-motion";
 import MenuCard from "./components/menu_card/MenuCard";
 import { IMenu } from "../../interfaces/Menu.interfaces";
 import _ from "lodash";
-import { ICart } from "./components/cart/Cart.interfaces";
+import { ICart, IShowCart } from "./components/cart/Cart.interfaces";
+import Cart from "./components/cart/Cart";
 
 function Menu() {
     const [filteredMenu, setFilteredMenu] = useState<IMenu[]>([]);
@@ -25,7 +26,8 @@ function Menu() {
     const [categoryList, setCategoryList] = useState<string[]>(['All', 'Pizza', 'Pasta', 'Drinks', 'Desserts', 'sides']);
     const [category, setCategory] = useState<string>('All');
     const [index, setIndex] = useState(0);
-    const [cartItems, setCartItems] = useState<ICart[]>([]);
+    const [cartItems, setCartItems] = useState<IShowCart[]>([]);
+    const [cart, setCart] = useState<ICart[]>([]);
 
     const navigate = useNavigate();
 
@@ -38,6 +40,12 @@ function Menu() {
 
     useEffect(() => {
         getMenu();
+
+        const cartData = localStorage.getItem('cart')
+        if (cartData) {
+            const currCartData: ICart[] = JSON.parse(cartData);
+            setCart(currCartData)
+        }
     }, []);
 
     // Complete FILTER
@@ -65,6 +73,10 @@ function Menu() {
         setFilter(e.target.value);
     };
 
+    const onHandleCloseCart = () => {
+        setIsShowCart(false);
+    }
+
 
 
     return (
@@ -78,8 +90,18 @@ function Menu() {
                         onChange={onHandleChangeSearch}
                         value={filter} 
                     />
-                    <img src={AiChatIcon} alt="" className="w-[18%] cursor-pointer" onClick={() => navigate("/chatbot")}/>
-                    <img src={CartIcon} alt="" className="w-[18%] cursor-pointer"/>
+                    <img 
+                        src={AiChatIcon} 
+                        alt="" 
+                        className="w-[18%] cursor-pointer" 
+                        onClick={() => navigate("/chatbot")}
+                    />
+                    <img 
+                        src={CartIcon}
+                        alt=""
+                        className="w-[18%] cursor-pointer"
+                        onClick={() => setIsShowCart(true)} 
+                    />
                 </div>
                 
                 {/* LIST MENU*/}
@@ -115,9 +137,19 @@ function Menu() {
                         ))}
                     </div>
                 </div>
-
                 
             </div>
+
+            {isShowCart &&
+                <motion.div
+                    className="fixed top-0 right-0 h-full bg-[#FFD6D6] shadow-lg w-[80%] p-4 z-50 rounded-l-3xl"
+                    initial={{ x: "100%" }}
+                    animate={{ x: isShowCart ? "0%" : "100%" }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                >
+                    <Cart cartItems={cartItems} onHandleCloseCart={onHandleCloseCart}/>
+                </motion.div>
+            }
         </Container>
     );
 }
