@@ -16,7 +16,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart, onHandleAddCo
 
     useEffect(() => {
         let tempSubtotal = 0;
-        cartItems.map((item: IShowCart) => {
+        cartItems.forEach((item: IShowCart) => {
             const itemTotalPrice = item.menu.price * item.count;
             tempSubtotal += itemTotalPrice;
         })
@@ -26,7 +26,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart, onHandleAddCo
         setTaxFees(tempTaxFees)
 
         setTotal(subtotal + taxFees)
-    }, [cartItems])
+    }, [cartItems, subtotal, taxFees])
 
     
 
