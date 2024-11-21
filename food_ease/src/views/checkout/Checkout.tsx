@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import BackIcon from "../../assets/back-icon-arrow.svg";
 import WriteIcon from "../../assets/write-icon.svg";
 
-import { doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, or } from 'firebase/firestore';
 import db from '../../firebase';
 import { IMenu } from '../../interfaces/Menu.interfaces';
 
@@ -68,7 +68,20 @@ function Checkout() {
 
 
     const onHandlePayment = () => {
-        //kurang hit api untuk save data order
+        // Get time
+        const time_now = new Date();
+
+        // Add to order history
+        const orderData = {cart, nickname, tableNo, time_now, total};
+
+        const orderCollection = collection(db, "order_history");
+        addDoc(orderCollection, orderData)
+            .then(() => {
+                console.log("Document successfully written!");
+            })
+            .catch((error) => {
+                console.error("Error writing document: ", error);
+            });
 
         // UNTUK CLEAR DATA DI LOCAL STORAGE KETIKA UDH PAYMENT
         localStorage.removeItem('cart');
