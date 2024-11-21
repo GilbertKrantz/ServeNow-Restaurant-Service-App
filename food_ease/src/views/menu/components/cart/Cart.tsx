@@ -36,7 +36,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart, onHandleAddCo
                 <img src={CartIcon} alt="" />
                 <p className='font-bold text-2xl text-white ml-3'>Cart</p>
             </div>
-            <hr className='bg-[#FFDECF] my-[7%] mx-5 h-[0.8%] z-70'/>
+            <hr className='border-[#FFDECF] my-[7%] px-5 h-[0.8%] z-70'/>
 
             {cartItems.length > 0 ? (
                 <>
@@ -58,11 +58,11 @@ const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart, onHandleAddCo
                                     </div>
                                 </div>
                             </div>
-                            <hr className='bg-[#FFDECF] my-[3%] mx-5 h-[0.8%] z-70'/>
+                            <hr className='border-[#FFDECF] my-[3%] px-5 h-[0.8%] z-70'/>
                         </>
                     ))}
 
-                    <hr className='bg-[#FFDECF] mt-[3%] mx-5 h-[0.8%] z-70'/>
+                    <hr className='border-[#FFDECF] mt-[3%] px-5 h-[0.8%] z-70'/>
 
                     <div className='mx-[5%] flex flex-col w-full my-[10%]'>
                         <div className='flex justify-between'>
@@ -75,7 +75,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart, onHandleAddCo
                         </div>
                     </div>
 
-                    <hr className='bg-[#FFDECF] mt-[3%] mx-5 h-[0.8%]'/>
+                    <hr className='border-[#FFDECF] mt-[3%] px-5 h-[0.8%]'/>
 
                     <div className='flex justify-between w-full'>
                         <p className='text-l text-white ml-5'>Total</p>
