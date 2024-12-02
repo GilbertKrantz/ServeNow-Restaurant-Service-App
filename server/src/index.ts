@@ -25,7 +25,6 @@ app.use(
   }),
 );
 
-
 app.post("/api/chat", async (req, res) => {
     const prompt = req.body.prompt;
     const generativeAI = new GenerativeAI();
