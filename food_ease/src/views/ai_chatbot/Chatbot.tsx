@@ -31,19 +31,12 @@ function Chatbot() {
     setMessages([firstMessage]); // Menambahkan pesan pertama otomatis
   }, []);
 
-  // const handleSendMessage = () => {
-  //   if (currentMessage.trim() === "") return;
+  const [isSending, setIsSending] = useState(false);
 
-  //   const now = new Date();
-  //   const formattedTime = formatTime(now);
-
-  //   const newMessage = { text: currentMessage, time: formattedTime };
-
-  //   setMessages((prevMessages) => [...prevMessages, newMessage]);
-  //   setCurrentMessage(""); // Clear input field
-  // };
   const handleSendMessage = async () => {
-    if (currentMessage.trim() === "") return;
+    if (currentMessage.trim() === "" || isSending) return;
+
+    setIsSending(true);
 
     const now = new Date();
     const formattedTime = formatTime(now);
@@ -66,7 +59,6 @@ function Chatbot() {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
           const data = await response.json();
-          // console.log(data);
           const aiMessage = { text: data.result, time: formatTime(new Date()) };
           setMessages((prevMessages) => [...prevMessages, aiMessage]);
         } else {
@@ -77,6 +69,8 @@ function Chatbot() {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsSending(false);
     }
   };
 
