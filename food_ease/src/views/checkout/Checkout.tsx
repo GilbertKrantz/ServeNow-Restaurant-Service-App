@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import BackIcon from "../../assets/back-icon-arrow.svg";
 import WriteIcon from "../../assets/write-icon.svg";
 
-import { addDoc, collection, doc, getDoc, or } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import db from '../../firebase';
 import { IMenu } from '../../interfaces/Menu.interfaces';
 
