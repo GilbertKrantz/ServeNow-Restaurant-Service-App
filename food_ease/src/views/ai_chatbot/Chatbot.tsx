@@ -31,7 +31,18 @@ function Chatbot() {
     setMessages([firstMessage]); // Menambahkan pesan pertama otomatis
   }, []);
 
-  const handleSendMessage = () => {
+  // const handleSendMessage = () => {
+  //   if (currentMessage.trim() === "") return;
+
+  //   const now = new Date();
+  //   const formattedTime = formatTime(now);
+
+  //   const newMessage = { text: currentMessage, time: formattedTime };
+
+  //   setMessages((prevMessages) => [...prevMessages, newMessage]);
+  //   setCurrentMessage(""); // Clear input field
+  // };
+  const handleSendMessage = async () => {
     if (currentMessage.trim() === "") return;
 
     const now = new Date();
@@ -41,6 +52,32 @@ function Chatbot() {
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setCurrentMessage(""); // Clear input field
+
+    try {
+      const response = await fetch("http://localhost:3000/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: currentMessage }),
+      });
+
+      if (response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const data = await response.json();
+          // console.log(data);
+          const aiMessage = { text: data.result, time: formatTime(new Date()) };
+          setMessages((prevMessages) => [...prevMessages, aiMessage]);
+        } else {
+          console.error("Expected JSON response but got:", contentType);
+        }
+      } else {
+        console.error("Failed to get AI response");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   // Auto scrool
