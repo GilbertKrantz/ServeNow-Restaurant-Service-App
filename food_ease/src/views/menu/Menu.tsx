@@ -24,7 +24,7 @@ function Menu() {
     const [allMenu, setAllMenu] = useState<IMenu[]>([]);
     const [filter, setFilter] = useState<string>('');
     const [isShowCart, setIsShowCart] = useState<boolean>(false);
-    const [categoryList, setCategoryList] = useState<string[]>(['All', 'Pizza', 'Pasta', 'Drinks', 'Desserts', 'sides']);
+    const [categoryList, setCategoryList] = useState<string[]>(['All', 'Pizza', 'Pasta', 'Drinks', 'Desserts', 'Sides']);
     const [category, setCategory] = useState<string>('All');
     const [index, setIndex] = useState(0);
     const [cartItems, setCartItems] = useState<IShowCart[]>([]);
@@ -148,7 +148,7 @@ function Menu() {
     return (
         <Container>
             <div className="w-full mx-auto h-full py-[13%]">
-                {/* SEARCH, AI CHAT< CART*/}
+                {/* SEARCH, AI CHAT, CART*/}
                 <div className="flex h-[9%] justify-evenly pl-[6%] w-[95%]">
                     <input
                         className="rounded-full border-2 drop-shadow-md shadow-md pr-8 pl-4 py-0 h-[90%] outline-none text-small text-black cursor-pointer"
