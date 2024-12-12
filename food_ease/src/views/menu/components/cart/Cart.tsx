@@ -36,7 +36,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart, onHandleAddCo
                 <img src={CartIcon} alt="" />
                 <p className='font-bold text-2xl text-white ml-3'>Cart</p>
             </div>
-            <hr className='border-[#FFDECF] my-[7%] px-5 h-[0.8%] z-70'/>
+            <hr className='border-yellow-400 my-[10%] px-5 h-[5%] z-70 w-[85%] border-[1px]'/>
 
             {cartItems.length > 0 ? (
                 <>
@@ -58,13 +58,13 @@ const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart, onHandleAddCo
                                     </div>
                                 </div>
                             </div>
-                            <hr className='border-[#FFDECF] my-[3%] px-5 h-[0.8%] z-70'/>
+                            {/* <hr className='border-[#FFDECF] my-[3%] px-5 h-[5%] z-70 w-[80%]'/> */}
                         </>
                     ))}
 
-                    <hr className='border-[#FFDECF] mt-[3%] px-5 h-[0.8%] z-70'/>
+                    <hr className='border-[#FFDECF] my-[10%] px-5 h-[5%] z-70 w-[85%] border-[1px]'/>
 
-                    <div className='mx-[5%] flex flex-col w-full my-[10%]'>
+                    <div className='mx-[5%] flex flex-col w-full'>
                         <div className='flex justify-between'>
                             <p className='text-l text-white ml-5'>Subtotal</p>
                             <p className='text-l text-white mr-5'>Rp { subtotal / 1000 } K</p>
@@ -75,7 +75,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, onHandleCloseCart, onHandleAddCo
                         </div>
                     </div>
 
-                    <hr className='border-[#FFDECF] mt-[3%] px-5 h-[0.8%]'/>
+                    <hr className='border-[#FFDECF] my-[10%] px-5 h-[5%] z-70 w-[85%] border-[1px]'/>
 
                     <div className='flex justify-between w-full'>
                         <p className='text-l text-white ml-5'>Total</p>

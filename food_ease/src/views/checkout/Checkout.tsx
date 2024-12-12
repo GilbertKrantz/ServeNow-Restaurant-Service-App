@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import BackIcon from "../../assets/back-icon-arrow.svg";
 import WriteIcon from "../../assets/write-icon.svg";
+import CardIcon from '../../assets/card-icon.svg'
+import CashIcon from '../../assets/cash-icon.svg'
 
 import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import db from '../../firebase';
 import { IMenu } from '../../interfaces/Menu.interfaces';
+import ChangePaymentModal from './components/change_payment_modal/ChangePaymentModal';
 
 function Checkout() {
     const navigate = useNavigate();
@@ -19,6 +22,8 @@ function Checkout() {
     const [nickname, setNickname]  = useState<string>('');
     const [tableNo, setTableNo]  = useState<number>(-1);
     const [orderForError, setOrderForError] = useState<string>('');
+    const [paymentMethod, setPaymentMethod] = useState<string>('Cash');
+    const [isOpenPaymentSelection, setIsOpenPaymentSelection] = useState<boolean>(false);
 
     useEffect(() => {
         const cartData = localStorage.getItem('cart');
@@ -72,7 +77,7 @@ function Checkout() {
         const time_now = new Date();
 
         // Add to order history
-        const orderData = {cart, nickname, tableNo, time_now, total};
+        const orderData = {cart, nickname, tableNo, time_now, total, paymentMethod};
 
         const orderCollection = collection(db, "order_history");
         addDoc(orderCollection, orderData)
@@ -86,6 +91,11 @@ function Checkout() {
         // UNTUK CLEAR DATA DI LOCAL STORAGE KETIKA UDH PAYMENT
         localStorage.removeItem('cart');
     }
+
+    const handlePaymentMethodChange = (method: string) => {
+        setPaymentMethod(method);
+        setIsOpenPaymentSelection(false);
+    };
 
     return (
         <div className='w-full mx-auto h-full bg-[#FFF7D1]'>
@@ -171,15 +181,32 @@ function Checkout() {
                 </div>
                 {/* Payment Method */}
                 <div className='flex flex-col pt-[5%] px-[10%]'>
-                    <label className="text-xl font-medium" htmlFor='payment_method'>Payment Method</label>
-                    <div className='flex mt-[5%]'>
-                        <p className='flex font-light'>Cash</p>
+                    <div className='flex justify-between'>
+                        <label className="text-xl font-medium" htmlFor='payment_method'>Payment Method</label>
+                        <div 
+                            className='rounded-full text-white bg-[#FFD09B] px-5 text-xs text-center py-0 flex justify-center items-center leading-none'
+                            onClick={()=>{setIsOpenPaymentSelection(true)}}
+                        >
+                            Edit
+                        </div>
+                    </div>
+                    <div className='flex mt-[5%] items-center'>
+                        {paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card' ?
+                        (
+                            <img src={CardIcon} alt="" />
+                        ) :
+                        (
+                            <img src={CashIcon} alt="" />
+                        )
+                        }
+                        <img src="" alt="" />
+                        <p className='ml-5 flex font-light'>{paymentMethod}</p>
                     </div>
                     <hr className='border-[#FFD09B] mt-[10%]' />
                 </div>
                 {/* Order Time */}
                 <div className='flex flex-col pt-[5%] px-[10%]'>
-                    <label className="text-xl font-medium" htmlFor='payment_method'>Order Time</label>
+                    <label className="text-xl font-medium">Order Time</label>
                     <div className='flex mt-[5%] justify-between'>
                         <p className='flex font-light'>Estimated Time</p>
                         <p className='self-center text-xl text-[#FFD09B] font-semibold'>25 mins</p>
@@ -209,9 +236,21 @@ function Checkout() {
                     </div>
                 </div>
             </div>
+
+            {isOpenPaymentSelection && (
+                <div 
+                    className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50" 
+                    onClick={() => {setIsOpenPaymentSelection(false)}}
+                >
+                    <ChangePaymentModal 
+                        selectedMethod={paymentMethod} 
+                        handlePaymentSelectionChange={handlePaymentMethodChange}
+                    />
+                </div>
+            )}
         </div>
 
     )
 }
 
-export default Checkout
+export default Checkout;
