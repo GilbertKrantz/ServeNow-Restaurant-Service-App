@@ -24,7 +24,7 @@ function Menu() {
     const [allMenu, setAllMenu] = useState<IMenu[]>([]);
     const [filter, setFilter] = useState<string>('');
     const [isShowCart, setIsShowCart] = useState<boolean>(false);
-    const [categoryList, setCategoryList] = useState<string[]>(['All', 'Pizza', 'Pasta', 'Drinks', 'Desserts', 'sides']);
+    const [categoryList, setCategoryList] = useState<string[]>(['All', 'Pizza', 'Pasta', 'Drinks', 'Desserts', 'Sides']);
     const [category, setCategory] = useState<string>('All');
     const [index, setIndex] = useState(0);
     const [cartItems, setCartItems] = useState<IShowCart[]>([]);
